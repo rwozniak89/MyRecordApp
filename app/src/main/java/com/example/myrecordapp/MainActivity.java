@@ -183,11 +183,14 @@ public class MainActivity extends AppCompatActivity
             while (elapsedTime < 5*1000) {
                 //perform db poll/check
                 elapsedTime = (new Date()).getTime() - startTime;
+                double x = (double)elapsedTime/ 1000;
 
-                statusTV3.setText(Long.toString(elapsedTime));
+                //statusTV3.setText(Double.toString(x) + " sek.");
+                statusTV3.setText( String.format("%,.2f sek.", x));
             }
 
             pauseRecording();
+            statusTV3.setText("");
         }
     }
 
@@ -211,7 +214,7 @@ public class MainActivity extends AppCompatActivity
             mFileName += "/" + getNameByDateTime() +  ".3gp";
             //mFileName += "/audio.3gp";
             ListFileNames.add(mFileName);
-
+            spinner.setSelection(ListFileNames.indexOf(mFileName));
             // below method is used to initialize
             // the media recorder class
             mRecorder = new MediaRecorder();
@@ -240,10 +243,12 @@ public class MainActivity extends AppCompatActivity
             }
             // start method will start
             // the audio recording.
+
             mRecorder.start();
             statusTV.setText("Recording Started");
             PrimeRun p = new PrimeRun(143);
             new Thread(p).start();
+
 
 
 
